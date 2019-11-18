@@ -1,5 +1,4 @@
 from flask import Flask,request, render_template, jsonify, redirect
-import pymongo
 import random
 from config import dbname, dbuser, psswd, host, parameters
 from flask_pymongo import PyMongo

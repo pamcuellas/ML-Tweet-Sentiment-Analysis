@@ -16,16 +16,17 @@
 
     <!-- Custom styles for this template -->
     <link href="/static/css/heroic-features.css" rel="stylesheet" />
-    
+
     <!-- Load Twitter icon as favicon -->
     <link rel="icon" href="../static/images/favicon.ico"> 
+
   </head>
 
   <body>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="#">Sentimental and Polical Analysis</a>
+        <a class="navbar-brand" href="/">Sentimental and Polical Analysis</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -60,66 +61,25 @@
     </nav>
 
     <!-- Page Content -->
-    <div class="container">
+    <div class="container" style="height: 100%;">
       <!-- Jumbotron Header -->
-      <header class="jumbotron my-1 text-center">
-        <p class="lead">
-          This page will get a random twitter message and do a sentimental analysis AND
-          check if the text has political context. <br /><b
-            >Textblob , Human Classification, and Models</b
-          >
-        </p>
-        
-        <a href="/" class="btn btn-primary btn-lg">Get a Twitter message</a>
-      </header>
-
-
-      <div class="row text-center">
-        <div class="col-lg-12 col-md-6 mb-6">
-          <h2><img src="/static/images/twitter.png" width="50" height="50">
-          Twitter message</h2> <h3 class="text-info bg-dark">#{{result['#tag']}}</h3>
-          <h5>{{result.text}}</h5> 
-          <br>
+      <form method="POST" action="/predicttext" >
+        <!-- <input type="submit" class="btn btn-primary btn-lg" value="Prediction"> -->
+        <div class="form-group">
+            <label for="text">Text to Classify:</label>
+            <input type="text" class="form-control" name='text' value='{{result.text}}'> 
         </div>
-      </div>
-      <div class="row text-center">
-          <div class="col-lg-12 col-md-6 mb-6">
-              <table class="table table-sm">
-                  <thead>
-                    <tr>
-                      <th scope="col"><h3><b>TextBlob</b></h3></th>
-                      <th scope="col"><h3><b>Human Classification</b></h3></th>
-                      <th scope="col"><h3><b>Sentimental (Model)</b></h3></th>
-                      <th scope="col"><h3><b>Political (Model)</b></h3></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                      <tr>
-                        <td>
-                          <img id="smileFaceTextblo"></img>
-                          <p hidden id="textValueTextblog">{{result.textblob}}</p>
-                        </td>
-                        <td>
-                          <img id="smileFaceHuman"></img>
-                          <p hidden id="textValueHuman">{{result.module_sent_an}}</p></td>
-                        <td>
-                            <img id="smileFaceModel"></img>
-                            <p hidden id="textValueModel">{{result.model_sent_an}}</p> 
-                        </td>
-                        <td>
-                            <img id="smileFacePolitic"></img>
-                            <p hidden id="textValuePolitic">{{result.module_politics}}</p>  
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-          </div>
+        <div class="form-group">
+            <label for="treated">Text treated:</label>
+            <input type="treated" class="form-control">
         </div>
-      
-      <!-- /.row -->
+        <div class="w-100 d-flex flex-column align-items-center">
+            <button type="submit" class="btn btn-primary btn-lg my-4">Apply the ML Model</button>
+            <img src="../static/images/{{result.img}}.png">
+        </div>
+      </form>
     </div>
-    <!-- /.container -->
-<br><br>
+
     <!-- Footer -->
     <footer class="fixed-bottom py-4 bg-dark">
       <div class="container">
@@ -133,7 +93,9 @@
     <!-- Bootstrap core JavaScript -->
     <script src="/static/vendor/jquery/jquery.min.js"></script>
     <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
-    <script src="/static/js/index.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="/static/js/plot.js"></script>
   </body>
 </html>

@@ -89,7 +89,6 @@ def classify_text( text ):
     to_return = [ str(predited[0]), text]
     return to_return
 
-
 @app.route('/twitter')
 def twitter():
     query_custom = {'#tag': {"$in": ['Greta Thunberg', 'greta',
@@ -142,7 +141,6 @@ def label():
         docs.append(doc)
     return jsonify(docs)
 
-
 @app.route('/plot')
 def plot():
     return render_template("plot.html")
@@ -152,6 +150,12 @@ def index():
     # retrieving a random text from twitter and get a random message based on the query
     count = mongo.db.twitter.find(query).count()
     result = mongo.db.twitter.find(query)[random.randrange(count)]
+
+    # Replace the sentiment from the Database with the result model  
+    text = result['text']
+    to_return = classify_text(text)
+    result['model_sent_an'] = to_return[0]
+    
     result['prediction'] = ''
     # render an index.html template and pass it the data you retrieved from the database
     return render_template("index.html", result=result)

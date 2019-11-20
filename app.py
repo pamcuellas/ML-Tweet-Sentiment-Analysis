@@ -28,7 +28,8 @@ def classify_text( text ):
     # Load the model from the file
     filename = './static/models/tweet_model.sav'
     model = pickle.load(open(filename, 'rb'))
-
+    
+    # This variable was necessary due to Heroku does not load corpora/stopwords for NLTK.
     stopwords = ['i',  'me',  'my',  'myself',  'we',  'our',  'ours',  'ourselves',  'you',  "you're",  "you've",  "you'll", \
           "you'd",  'your',  'yours',  'yourself',  'yourselves',  'he',  'him',  'his',  'himself',  'she',  "she's",  'her', \
           'hers',  'herself',  'it',  "it's",  'its',  'itself',  'they',  'them',  'their',  'theirs',  'themselves',  'what',  \
@@ -62,7 +63,6 @@ def classify_text( text ):
 
     # Remove stopwords
     token_space = tokenize.WhitespaceTokenizer()
-    # stopwords = nltk.corpus.stopwords.words("english")
     new_phrase = list()
     text_words = token_space.tokenize(text.lower())
     for word in text_words:
@@ -85,8 +85,9 @@ def classify_text( text ):
     bag_of_words = vectorizer.fit_transform(test['treated'].apply(lambda x: np.str_(x)))
     predited = model.predict(bag_of_words)
 
-    # Returns the text prediction 
-    return str(predited[0])
+    # Returns the treated text and the classification 
+    to_return = [ str(predited[0]), text]
+    return to_return
 
 
 @app.route('/twitter')
@@ -116,7 +117,8 @@ def predict():
     # Get the tweet
     tweet = request.form['tweet']
     # Call function to clasify the tweet
-    to_return = classify_text(tweet)
+    result = classify_text(tweet)
+    to_return = result[0]
 
     # Check the classification
     sentiment = to_return
@@ -168,8 +170,9 @@ def filterRankRange(value):
 @app.route('/predictinput')
 def predictinput():
 
-    result = {'text': 'Type your text here'}
-    result['img'] = 'NEUTRAL'
+    result = {'text': ''}
+    result['img'] = 'twitter'
+    result['treated'] = ''
 
     return render_template("predict-input.html", result=result)
 
@@ -181,15 +184,18 @@ def predicttext():
 
     # Call function to clasify the tweet
     to_return = classify_text(text)
+    classification = to_return[0]
 
     img = ''
-    if (to_return == '0'):
+    if (classification == '0'):
         img = 'NEGATIVE'
     else: 
         img = 'POSITIVE'
 
-    result = {'text': to_return}
+    result = {'text': text}
     result['img'] = img
+    result['treated'] = to_return[1]
+
 
     return render_template("predict-input.html", result=result)
 

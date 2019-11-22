@@ -78,15 +78,15 @@
                           </div>
                           <div class="w-100 d-flex flex-column align-items-center">
                             <div class="w-50 d-flex flex-row justify-content-around">  
-                              <button id="btn_grab" type="submit" class="btn btn-primary my-4" style="width:220px;" name="action" value="grab_tweet">
-                                <span id="span_grab" class=""></span>
-                                Get tweet on the fly
-                              </button>
                               <button id="btn_pred" type="submit" class="btn btn-primary my-4" style="width:220px;" name="action" value="predict">
                                   <span id="span_pred" class=""></span> 
                                   Apply the Model 
                               </button> 
-                            </div>
+                              <button id="btn_grab" type="submit" class="btn btn-primary my-4" style="width:220px;" name="action" value="grab_tweet">
+                                  <span id="span_grab" class=""></span>
+                                  Get tweet on the fly
+                                </button>
+                              </div>
                             <div class="square" style="height: 85px;width: 85px;">
                               <img style='height: 100%; width: 100%; object-fit: contain' src="../static/images/{{result.img}}.png" alt="Classification">
                             </div>
@@ -117,7 +117,7 @@
       });      
       $("#btn_grab").click( function (index) {
         $("#span_grab").addClass('spinner-border spinner-border-sm');
-      });      
+      });    
     </script>
   
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>

@@ -5,7 +5,7 @@ The initial dataset used by this application has 1057 tweets and was classified 
 
 To replicate it you will need to create a MongoDB database named dbAI, a twitter developer account to get the credentials to use the tweepy library, and finally write this information on the config.py file.
 
-A list of technologies used are flask, pymongo, pickle (to save and load the model), sklearn, nltk, pandas, re (to clean up the data), tweepy (to use the Twitter API), seaborn, word cloud, matplotlib; HTML5, CSS3, jQuery, Plotly, D3, Bootstrap, MongoDB, JSON, and Tableau.
+A list of technologies used are flask, pymongo, pickle (to save and load the model), sklearn, nltk, pandas, re (to clean up the data), tweepy (to use the Twitter API), seaborn, word cloud, and matplotlib; HTML5, CSS3, jQuery, Plotly, D3, Bootstrap, MongoDB, JSON, and Tableau.
 
 ### To check out this application online access https://ml-tweet-sentiment-analysis.herokuapp.com/
 

@@ -26,3 +26,7 @@ form:before {
     border-radius: 10px;
 }
 
+.hide-page {
+	display: none!important;
+}
+

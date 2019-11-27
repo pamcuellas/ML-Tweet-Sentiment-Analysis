@@ -23,7 +23,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target=".navbar" data-offset="50">
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
@@ -88,7 +88,7 @@
                                 </button>
                               </div>
                             <div class="square" style="height: 85px;width: 85px;">
-                              <img style='height: 100%; width: 100%; object-fit: contain' src="../static/images/{{result.img}}.png" alt="Classification">
+                              <img style='height: 100%; width: 100%; object-fit: contain' data-html="true" data-toggle="tooltip" title="{{result.tooltip}}" src="../static/images/{{result.img}}.png" alt="Classification">
                             </div>
                           </div>
                         </form>
@@ -98,6 +98,7 @@
           </div>
       </div>
     </section>
+
     <!-- Footer -->
     <footer class="fixed-bottom py-4 bg-dark">
       <div class="container">
@@ -112,12 +113,15 @@
     <script src="/static/vendor/jquery/jquery.min.js"></script>
     <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script>
-      $("#btn_pred").click( function (index) {
-        $("#span_pred").addClass('spinner-border spinner-border-sm');
-      });      
-      $("#btn_grab").click( function (index) {
-        $("#span_grab").addClass('spinner-border spinner-border-sm');
-      });    
+      $(document).ready(function(){
+        $("#btn_pred").click( function (index) {
+          $("#span_pred").addClass('spinner-border spinner-border-sm');
+        });      
+        $("#btn_grab").click( function (index) {
+          $("#span_grab").addClass('spinner-border spinner-border-sm');
+        });    
+        $('[data-toggle="tooltip"]').tooltip();   
+    });
     </script>
   
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>

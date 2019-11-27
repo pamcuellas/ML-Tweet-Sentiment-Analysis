@@ -13,6 +13,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from nltk import tokenize
 import nltk
 import tweet_grabber
+import datetime
 
 app = Flask(__name__)
 
@@ -23,6 +24,12 @@ query = {'#tag': {"$in": ['Greta Thunberg', 'greta',
                           'Greta']}, 'module_sent_an': {"$in": ['1', '0']}}
 
 id_global = ''
+
+
+def check_none( variable ):
+    if (variable is not None):
+        return str(variable)
+    return ''
 
 
 def classify_text( text ):
@@ -131,7 +138,6 @@ def predict():
     result['text'] = tweet
     result['textblob'] = request.form['textblob']
     result['module_sent_an'] = request.form['human']
-
     return render_template("index.html", result=result)
 
 @app.route('/label')
@@ -181,7 +187,7 @@ def predicttext():
     text = request.form['text']
     
     if ( 'predict' ==  request.form['action']):
-        # Call function to clasify the tweet
+        # Call function to classify the tweet
         to_return = classify_text(text)
         classification = to_return[0]
 
@@ -192,12 +198,51 @@ def predicttext():
             img = 'POSITIVE'
 
         result = {'text': text}
-        result['img'] = img
-        result['treated'] = to_return[1]
+        result['img']             = img
+        result['treated']         = to_return[1]
+        result['created_at']      = ''
+        result['id_str']          = ''
+        result['tweet']           = ''
+        result['source']          = ''
+        result['user_id']         = ''
+        result['screen_name']     = ''
+        result['location']        = ''
+        result['url']             = ''
+        result['followers_count'] = ''
+        result['friends_count']   = ''
+        result['created_at']      = ''
+        result['language']        = ''
     else: 
         # Get a tweet on the fly
-        text = tweet_grabber.run_api('Greta')
-        result = {'text': text}
+        tweet = tweet_grabber.run_api('Greta')
+        result = {'text': tweet['text']}
+
+        tweet_created_at = datetime.datetime.strftime(tweet['tweet_created_at'], "%Y-%m-%d %H:%M:%S")
+        user_created_at = datetime.datetime.strftime(tweet['user_created_at'], "%Y-%m-%d %H:%M:%S")
+        
+        followers = ''
+        if (tweet['followers_count'] is not None):
+            followers = str(tweet['followers_count'])
+        
+        friends = ''
+        if ( tweet['friends_count'] is not None):
+            friends = str(tweet['friends_count'])
+
+
+        tooltip =  \
+          "Tweet ID: " + check_none(tweet['id_str']) \
+        + "<br>User ID: " + check_none(tweet['user_id']) \
+        + "<br>User Name: " + check_none(tweet['user_name']) \
+        + "<br>Create At: " + tweet_created_at \
+        + "<br>Source: " + check_none(tweet['source']) \
+        + "<br>Screen Name: " + check_none(tweet['screen_name']) \
+        + "<br>Location: " + check_none(tweet['location']) \
+        + "<br>Followers: " + followers \
+        + "<br>Friends: " + friends \
+        + "<br>Signed up: " + user_created_at \
+        + "<br>Language: " + check_none(tweet['language']).upper() \
+         
+        result["tooltip"] = tooltip
         result['img'] = 'twitter'
         result['treated'] = ''
     

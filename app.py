@@ -179,13 +179,15 @@ def predictinput():
     result = {'text': ''}
     result['img'] = 'twitter'
     result['treated'] = ''
+    result['subject'] = ''
+
     return render_template("predict-input.html", result=result)
 
 @app.route('/predicttext', methods=["POST"])
 def predicttext():
     # Get the text
     text = request.form['text']
-    
+    subject = request.form['subject']
     if ( 'predict' ==  request.form['action']):
         # Call function to classify the tweet
         to_return = classify_text(text)
@@ -213,22 +215,26 @@ def predicttext():
         result['created_at']      = ''
         result['language']        = ''
     else: 
+        # Certify that we have a subject
+        if (subject.strip() == ''):
+            subject = 'Greta' 
+
         # Get a tweet on the fly
-        tweet = tweet_grabber.run_api('Greta')
+        tweet = tweet_grabber.run_api(subject)
         result = {'text': tweet['text']}
 
+        # Format data to present on tooltip
         tweet_created_at = datetime.datetime.strftime(tweet['tweet_created_at'], "%Y-%m-%d %H:%M:%S")
         user_created_at = datetime.datetime.strftime(tweet['user_created_at'], "%Y-%m-%d %H:%M:%S")
-        
         followers = ''
         if (tweet['followers_count'] is not None):
             followers = str(tweet['followers_count'])
-        
         friends = ''
         if ( tweet['friends_count'] is not None):
             friends = str(tweet['friends_count'])
 
 
+        # Mount tooltip
         tooltip =  \
           "Tweet ID: " + check_none(tweet['id_str']) \
         + "<br>User ID: " + check_none(tweet['user_id']) \
@@ -245,7 +251,9 @@ def predicttext():
         result["tooltip"] = tooltip
         result['img'] = 'twitter'
         result['treated'] = ''
-    
+
+    result['subject'] = subject
+
     return render_template("predict-input.html", result=result)
 
 if __name__ == "__main__":

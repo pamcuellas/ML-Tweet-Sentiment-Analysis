@@ -30,3 +30,15 @@ form:before {
 	display: none!important;
 }
 
+
+#clean-up {
+    background-color: #00b3b3;
+    box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.4);
+    border: 0.5px solid #0275d8;
+    transition: all 0.3s ease-in-out;
+}
+ 
+#clean-up:hover{
+    cursor: pointer;
+    box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.6);
+}

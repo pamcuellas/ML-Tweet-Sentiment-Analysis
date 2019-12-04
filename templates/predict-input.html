@@ -65,42 +65,53 @@
           <div class="container">
               <div class="row text-white">
                   <div class="col-xl-11 col-lg-11 col-md-11 col-sm-11 mx-auto text-center">
-                      <h1 class="display-4 py-2 text-truncate">Applying the Sentiment Model</h1>
+                      <h1 class="display-4 mt-3 pb-3 text-truncate">Applying the Sentiment Model</h1>
                       <div class="">
-                        <form class="w-100 pb-4" method="POST" action="/predicttext">
-                          <div class="form-group">
-                              <label style="font-size:20px;" for="text">Text to classify</label>
+                        <form class="w-100 d-flex flex-column  align-items-center" method="POST" action="/predicttext">
+                          <div class="mb-3 w-100 d-flex flex-row  align-items-left mt-3">
+                              <label class="mt-1 text-left" style="font-size:20px;width:230px;" for="text">Text to classify:</label>
                               <input type="text" class="form-control" name='text' value='{{result.text}}'> 
                           </div>
-                          <div class="form-group">
-                              <label style="font-size:20px;" for="treated" >Text after treatment</label>
+                          <div class="mb-3 w-100 d-flex flex-row align-items-center">
+                              <label class="mt-1 text-left" style="font-size:20px;width:230px;" for="treated" >Text after treatment:</label>
                               <input type="treated" class="form-control" name='treated' value='{{result.treated}}' disabled> 
                           </div>
+                          <div class="mb-2 w-100 d-flex flex-row  align-items-center" style="width: 400px;">
+                              <label class="mt-1 text-left" style="font-size:20px;width:230px;" for="subject">Subject to search:</label>
+                              <input type="text" class="form-control" name='subject' value='{{result.subject}}'> 
+                          </div>
                           <div class="w-100 d-flex flex-column align-items-center">
-                            <div class="w-50 d-flex flex-row justify-content-around">  
+                            <div class="w-75 d-flex flex-row justify-content-around">  
                               <button id="btn_pred" type="submit" class="btn btn-primary my-4" style="width:220px;" name="action" value="predict">
                                   <span id="span_pred" class=""></span> 
                                   Apply the Model 
                               </button> 
                               <button id="btn_grab" type="submit" class="btn btn-primary my-4" style="width:220px;" name="action" value="grab_tweet">
-                                  <span id="span_grab" class=""></span>
-                                  Get tweet on the fly
-                                </button>
-                              </div>
+                                <span id="span_grab" class=""></span>
+                                Get tweet on the fly
+                              </button>
+                            </div>
                             <div class="square" style="height: 85px;width: 85px;">
                               <img style='height: 100%; width: 100%; object-fit: contain' data-html="true" data-toggle="tooltip" title="{{result.tooltip}}" src="../static/images/{{result.img}}.png" alt="Classification">
                             </div>
                           </div>
-                        </form>
+                      </form>
+                      <div id="clean-up" class="square mb-2 rounded-pill d-flex flex-column align-items-center justify-content-center" style="margin-left: 96.5%;height: 40px;width: 40px;">
+                        <img src="../static/images/clean.png"  style='height: 70%; width: 70%;' alt="Clean Text boxes">
                       </div>
+                    </div>
                   </div>
               </div>
           </div>
-      </div>
+
+    
+        </div>
+
+
     </section>
 
     <!-- Footer -->
-    <footer class="fixed-bottom py-4 bg-dark">
+    <footer class="fixed-bottom py-3 bg-dark">
       <div class="container">
         <p class="m-0 text-center text-white">
           Copyright &copy; UofT final Project Website 2019
@@ -112,20 +123,12 @@
     <!-- Bootstrap core JavaScript -->
     <script src="/static/vendor/jquery/jquery.min.js"></script>
     <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script>
-      $(document).ready(function(){
-        $("#btn_pred").click( function (index) {
-          $("#span_pred").addClass('spinner-border spinner-border-sm');
-        });      
-        $("#btn_grab").click( function (index) {
-          $("#span_grab").addClass('spinner-border spinner-border-sm');
-        });    
-        $('[data-toggle="tooltip"]').tooltip();   
-    });
-    </script>
+ 
+    <!-- jQuery Customized -->
   
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="/static/js/plot.js"></script>
+    <script src="./static/js/app.js"> </script>
+    <script src="./static/js/plot.js"></script>
   </body>
 </html>

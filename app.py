@@ -220,7 +220,13 @@ def predicttext():
             subject = 'Greta' 
 
         # Get a tweet on the fly
-        tweet = tweet_grabber.run_api(subject)
+        try:
+            tweet = tweet_grabber.run_api(subject)
+        except Exception as inst:
+            print (type(inst))     # the exception instance
+            print (inst.args )     # arguments stored in .args
+            print (inst )
+        
         result = {'text': tweet['text']}
 
         # Format data to present on tooltip

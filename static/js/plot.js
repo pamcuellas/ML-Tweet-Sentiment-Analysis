@@ -47,6 +47,7 @@ function plotCompare(data) {
     else positive += 1;
   }
 
+
   Ytextblog.push(neutral);
   Ytextblog.push(positive);
   Ytextblog.push(negative);
@@ -179,9 +180,12 @@ function plotMahcine(data) {
     else positive += 1;
   }
 
-  Ytextblog.push(neutral);
-  Ytextblog.push(positive);
-  Ytextblog.push(negative);
+
+  var total = neutral + positive + negative;
+
+  Ytextblog.push(format(neutral /total));
+  Ytextblog.push(format(positive/total));
+  Ytextblog.push(format(negative/total));
   //   console.log(Xtextblog);
   //   console.log(Ytextblog);
 
@@ -189,7 +193,7 @@ function plotMahcine(data) {
     x: Xtextblog,
     y: Ytextblog,
     type: "bar",
-    name: "TextBlob"
+    name: "TextBlob",
   };
   //model SENTIMENT
   Ytextblog = [];
@@ -208,14 +212,16 @@ function plotMahcine(data) {
     else Xtextblog[i] = "positive";
   }
 
-  Ytextblog.push(positive);
-  Ytextblog.push(negative);
+  total = positive + negative;
+
+  Ytextblog.push(format(positive/total));
+  Ytextblog.push(format(negative/total));
 
   var trace2 = {
     x: Xtextblog,
     y: Ytextblog,
     type: "bar",
-    name: "Model - Sentimental"
+    name: "Model - Sentimental",
   };
   //POLITICAL MODEL
   Ytextblog = [];
@@ -230,14 +236,23 @@ function plotMahcine(data) {
     else if (data[i].module_politics == "negative") negative += 1;
   }
 
-  Ytextblog.push(positive);
-  Ytextblog.push(negative);
+  total = positive + negative;
+
+  Ytextblog.push(format(positive/total));
+  Ytextblog.push(format(negative/total));
 
   var trace3 = {
     x: Xtextblog,
     y: Ytextblog,
+    // xaxis: {
+    //   boundmode: 'hard',
+    //   bounds: [0, 100]
+    // },
     type: "bar",
-    name: "Model - Political"
+    name: "Model - Political",
+    marker:{
+      color: 'red'
+    }
   };
 
   var data2 = [trace1, trace2, trace3];
@@ -245,7 +260,11 @@ function plotMahcine(data) {
   var layout = {
     title: "Machine Learning classification <br>Total: " + data.length,
     xaxis: { title: "Type of Sentiment" },
-    yaxis: { title: "Number of Twitter (messages)" }
+    yaxis: { title: "Percentage" }
+    // yaxis: { title: "Number of Twitter (messages)" }
   };
+  // };
   Plotly.newPlot("plot", data2, layout);
 }
+
+format = (num) => Math.round(num * 10000)/100; 

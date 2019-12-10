@@ -51,14 +51,11 @@ function plotCompare(data) {
   Ytextblog.push(neutral);
   Ytextblog.push(positive);
   Ytextblog.push(negative);
-  //   console.log(Xtextblog);
-  //   console.log(Ytextblog);
 
   var trace1 = {
     x: Xtextblog,
     y: Ytextblog,
     type: "bar",
-    // text: "TextBlob",
     name: "TextBlob"
   };
   //---> HUMAN LABELED
@@ -186,8 +183,7 @@ function plotMahcine(data) {
   Ytextblog.push(format(neutral /total));
   Ytextblog.push(format(positive/total));
   Ytextblog.push(format(negative/total));
-  //   console.log(Xtextblog);
-  //   console.log(Ytextblog);
+
 
   var trace1 = {
     x: Xtextblog,
@@ -244,10 +240,6 @@ function plotMahcine(data) {
   var trace3 = {
     x: Xtextblog,
     y: Ytextblog,
-    // xaxis: {
-    //   boundmode: 'hard',
-    //   bounds: [0, 100]
-    // },
     type: "bar",
     name: "Model - Political",
     marker:{
@@ -260,10 +252,8 @@ function plotMahcine(data) {
   var layout = {
     title: "Machine Learning classification <br>Total: " + data.length,
     xaxis: { title: "Type of Sentiment" },
-    yaxis: { title: "Percentage" }
-    // yaxis: { title: "Number of Twitter (messages)" }
+    yaxis: { title: "( % )" }
   };
-  // };
   Plotly.newPlot("plot", data2, layout);
 }
 
